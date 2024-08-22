@@ -8,3 +8,5 @@ Route::get(uri: '/', action: function () {
         'php' => PHP_VERSION,
     ];
 });
+
+require __DIR__.'/auth.php';
