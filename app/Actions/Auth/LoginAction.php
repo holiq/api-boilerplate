@@ -5,8 +5,8 @@ namespace App\Actions\Auth;
 use App\DataTransferObjects\Auth\LoginData;
 use App\Models\User;
 use Holiq\ActionData\Foundation\Action;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 readonly class LoginAction extends Action
@@ -20,7 +20,9 @@ readonly class LoginAction extends Action
     {
         throw_unless(
             condition: Auth::attempt($data->toArray()),
-            exception: AuthenticationException::class
+            exception: ValidationException::withMessages([
+                'email' => trans(key: 'auth.failed'),
+            ])
         );
 
         /** @var User $user */
