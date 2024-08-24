@@ -40,7 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         'message' => $message,
                         'errors' => $errors,
                     ],
-                    status: $status->value
+                    status: $status->value,
                 );
             }
 
