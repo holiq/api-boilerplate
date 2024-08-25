@@ -6,16 +6,14 @@ use App\Actions\Auth\LoginAction;
 use App\Concerns\ApiResponse;
 use App\DataTransferObjects\Auth\LoginData;
 use App\Http\Requests\Auth\LoginRequest;
-use CuyZ\Valinor\Mapper\MappingError;
 use Illuminate\Http\JsonResponse;
-use Throwable;
 
 class LoginController
 {
     use ApiResponse;
 
     /**
-     * @throws MappingError|Throwable
+     * @throws \CuyZ\Valinor\Mapper\MappingError|\Throwable
      */
     public function __invoke(LoginRequest $request): JsonResponse
     {

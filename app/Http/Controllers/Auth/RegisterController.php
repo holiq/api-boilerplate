@@ -7,7 +7,6 @@ use App\Concerns\ApiResponse;
 use App\DataTransferObjects\Auth\RegisterData;
 use App\Enums\HttpStatus;
 use App\Http\Requests\Auth\RegisterRequest;
-use CuyZ\Valinor\Mapper\MappingError;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController
@@ -15,7 +14,7 @@ class RegisterController
     use ApiResponse;
 
     /**
-     * @throws MappingError
+     * @throws \CuyZ\Valinor\Mapper\MappingError
      */
     public function __invoke(RegisterRequest $request): JsonResponse
     {

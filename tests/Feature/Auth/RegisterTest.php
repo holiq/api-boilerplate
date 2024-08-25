@@ -6,7 +6,7 @@ use App\Models\User;
  * @var \Tests\TestCase $this
  */
 it('can register', function () {
-    $response = $this->post(route(name: 'auth.register'), [
+    $response = $this->post(route(name: 'register'), [
         'name' => 'John Doe',
         'email' => 'john@doe.com',
         'password' => 'password',
@@ -21,7 +21,7 @@ it('can register', function () {
 it('can not register if email has already exists', function () {
     $user = User::factory()->create();
 
-    $response = $this->post(route(name: 'auth.register'), [
+    $response = $this->post(route(name: 'register'), [
         'name' => 'John Doe',
         'email' => $user->email,
         'password' => 'password',
@@ -34,7 +34,7 @@ it('can not register if email has already exists', function () {
 });
 
 it('can not register if request is empty', function () {
-    $response = $this->post(route(name: 'auth.register'));
+    $response = $this->post(route(name: 'register'));
 
     $response->assertUnprocessable();
     expect(value: $response->content())->toContain(needles: 'The name field is required. (and 2 more errors)');

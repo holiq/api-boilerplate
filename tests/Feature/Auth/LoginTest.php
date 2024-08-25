@@ -8,7 +8,7 @@ use App\Models\User;
 it('can login', function () {
     $user = User::factory()->create();
 
-    $response = $this->post(route(name: 'auth.login'), [
+    $response = $this->post(route(name: 'login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -17,7 +17,7 @@ it('can login', function () {
 });
 
 it('can not login if credentials are invalid', function () {
-    $response = $this->post(route(name: 'auth.login'), [
+    $response = $this->post(route(name: 'login'), [
         'email' => 'invalid@mail.com',
         'password' => 'wrong-password',
     ]);
@@ -28,7 +28,7 @@ it('can not login if credentials are invalid', function () {
 });
 
 it('can not login if request is empty.', function () {
-    $response = $this->post(route(name: 'auth.login'));
+    $response = $this->post(route(name: 'login'));
 
     $response->assertUnprocessable();
 

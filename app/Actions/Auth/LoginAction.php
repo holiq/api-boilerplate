@@ -7,14 +7,13 @@ use App\Models\User;
 use Holiq\ActionData\Foundation\Action;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 readonly class LoginAction extends Action
 {
     /**
      * @return array<string, mixed>
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function execute(LoginData $data): array
     {
