@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Auth\SendResetLinkAction;
 use App\Concerns\ApiResponse;
 use App\Http\Requests\Auth\PasswordResetRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController
 {
@@ -14,14 +13,8 @@ class PasswordResetLinkController
 
     public function __invoke(PasswordResetRequest $request): JsonResponse
     {
-        $status = Password::sendResetLink($request->validated());
+        $message = SendResetLinkAction::resolve()->execute($request->validated());
 
-        if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
-        }
-
-        return $this->resolveSuccessResponse(message: __($status));
+        return $this->resolveSuccessResponse(message: __($message));
     }
 }
