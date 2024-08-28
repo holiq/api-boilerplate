@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\HttpStatus;
+use App\Exceptions\EmailAlreadyVerifiedException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -24,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $status = match (true) {
                     $e instanceof NotFoundHttpException => HttpStatus::NotFound,
                     $e instanceof AuthenticationException => HttpStatus::Unauthorized,
-                    $e instanceof ValidationException => HttpStatus::UnprocessableEntity,
+                    $e instanceof ValidationException, $e instanceof EmailAlreadyVerifiedException => HttpStatus::UnprocessableEntity,
                     default => HttpStatus::InternalServerError,
                 };
 
