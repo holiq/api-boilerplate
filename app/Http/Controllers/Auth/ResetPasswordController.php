@@ -12,6 +12,9 @@ class ResetPasswordController
 {
     use ApiResponse;
 
+    /**
+     * @throws \CuyZ\Valinor\Mapper\MappingError|\Throwable
+     */
     public function __invoke(ResetPasswordRequest $request): JsonResponse
     {
         $message = ResetPasswordAction::resolve()->execute(

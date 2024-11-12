@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 readonly class HandleEmailVerificationAction extends Action
 {
+    /**
+     * @throws \Throwable
+     */
     public function execute(Request $request): void
     {
         /** @var \App\Models\User $user */

@@ -11,6 +11,9 @@ class PasswordResetLinkController
 {
     use ApiResponse;
 
+    /**
+     * @throws \Throwable
+     */
     public function __invoke(PasswordResetRequest $request): JsonResponse
     {
         $message = SendResetLinkAction::resolve()->execute($request->validated());
