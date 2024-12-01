@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-return Application::configure(basePath: dirname(__DIR__))
+return Application::configure(basePath: dirname(path: __DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
@@ -29,11 +29,15 @@ return Application::configure(basePath: dirname(__DIR__))
                     default => HttpStatus::InternalServerError,
                 };
 
-                $message = $status === HttpStatus::InternalServerError
+                $isProduction = app()->isProduction();
+
+                $message = ($isProduction && $status === HttpStatus::InternalServerError)
                     ? 'Internal server error, cannot processed the request.'
                     : $e->getMessage();
 
-                $errors = $e instanceof ValidationException ? $e->errors() : [];
+                $errors = $isProduction
+                    ? ($e instanceof ValidationException ? $e->errors() : [])
+                    : ($e instanceof ValidationException ? $e->errors() : $e->getTrace());
 
                 return response()->json(
                     data: [
