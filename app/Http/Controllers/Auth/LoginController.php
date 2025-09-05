@@ -6,6 +6,7 @@ use App\Actions\Auth\LoginAction;
 use App\Concerns\ApiResponse;
 use App\DataTransferObjects\Auth\LoginData;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Api\LoginResource;
 use Illuminate\Http\JsonResponse;
 
 class LoginController
@@ -23,7 +24,7 @@ class LoginController
 
         return $this->resolveSuccessResponse(
             message: 'Login successful',
-            data: $data,
+            data: LoginResource::make($data),
         );
     }
 }

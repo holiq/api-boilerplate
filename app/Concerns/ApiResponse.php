@@ -2,19 +2,19 @@
 
 namespace App\Concerns;
 
-use App\Enums\HttpStatus;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
 trait ApiResponse
 {
     /**
-     * @param  array<string, mixed> | Collection<string, mixed>  $data
+     * @param  array<string, mixed> | Collection<string, mixed> | AnonymousResourceCollection | JsonResource  $data
      */
-    public function resolveSuccessResponse(string $message, array | Collection $data = [], HttpStatus | int $status = HttpStatus::OK): JsonResponse
+    public function resolveSuccessResponse(string $message, array | Collection | AnonymousResourceCollection | JsonResource $data = [], int $status = Response::HTTP_OK): JsonResponse
     {
-        $status = is_int($status) ? $status : $status->value;
-
         return response()->json(
             data: [
                 'status' => 'success',
@@ -26,12 +26,10 @@ trait ApiResponse
     }
 
     /**
-     * @param  array<string, mixed>  $errors
+     * @param  array<string, mixed> | Collection<string, mixed> | AnonymousResourceCollection | JsonResource  $errors
      */
-    public function resolveFailedResponse(string $message, array $errors = [], HttpStatus | int $status = HttpStatus::NotFound): JsonResponse
+    public function resolveFailedResponse(string $message, array | Collection | AnonymousResourceCollection | JsonResource $errors = [], int $status = Response::HTTP_NOT_FOUND): JsonResponse
     {
-        $status = is_int($status) ? $status : $status->value;
-
         return response()->json(
             data: [
                 'status' => 'error',
